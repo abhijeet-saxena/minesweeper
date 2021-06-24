@@ -1,0 +1,19 @@
+{
+  "name": "minesweeper",
+  "description": "Ever stuck searching for your favorite TV Shows and Movies. Worry Not ! Now you can easily search for them on Netflix, Amazon Prime Video, Hotstar and many more. So just sit back 🛋️, grab some Popcorn 🍿and enjoy 🤩",
+  "author": "Abhijeet Saxena",
+  "license": "MIT",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsRockyy/minesweeper.git"
+  },
+  "devDependencies": {
+    "vite": "^2.3.8"
+  }
+}
