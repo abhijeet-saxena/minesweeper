@@ -1,5 +1,5 @@
-import "./style.css";
-import { test } from "./Minesweeper";
+import "./styles/style.css";
+import { test } from "./scripts/Minesweeper";
 
 document.querySelector("#app").innerHTML = `
   <h1>Hello Vite!</h1>

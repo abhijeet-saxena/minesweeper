@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "homepage": "/minesweeper/",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
     "serve": "vite preview",
     "predeploy": "npm run build",
