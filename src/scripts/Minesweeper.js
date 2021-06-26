@@ -22,7 +22,7 @@ class Minesweeper {
           y: j,
           isMine: this.mineLocations.has(this.ROWS * i + j),
           isRevealed: false,
-          value: 0,
+          value: null,
         });
       }
       this.board.push(row);
@@ -30,7 +30,8 @@ class Minesweeper {
 
     for (let i = 0; i < this.ROWS; i++) {
       for (let j = 0; j < this.COLUMNS; j++) {
-        this.board[i][j].value = this.getValueAtCell(i, j);
+        if (!this.board[i][j].isMine)
+          this.board[i][j].value = this.getValueAtCell(i, j);
       }
     }
   }
@@ -59,6 +60,61 @@ class Minesweeper {
       }
     }
     return value;
+  }
+
+  getAdjacentCells(row, col) {
+    const adj = [];
+
+    for (let i = -1; i < 2; i++) {
+      const currentRow = this.board[row + i];
+
+      if (currentRow) {
+        let left = currentRow[col - 1];
+        let middle = currentRow[col];
+        let right = currentRow[col + 1];
+
+        if (left && !left.isMine) adj.push(left);
+
+        if (i !== 0 && middle && !middle.isMine) adj.push(middle);
+
+        if (right && !right.isMine) adj.push(right);
+      }
+    }
+
+    return adj;
+  }
+
+  recursivelyOpenCells(row, col) {
+    let op = [];
+    let queue = [this.board[row][col]];
+
+    while (queue.length) {
+      const popped = queue.shift();
+      const adj = this.getAdjacentCells(popped.x, popped.y);
+
+      for (let item of adj) {
+        if (!item.isRevealed) {
+          op.push(item);
+          if (item.value === 0) {
+            queue.push(item);
+          }
+          item.isRevealed = true;
+        }
+      }
+    }
+
+    return op;
+  }
+
+  openCell(row, col) {
+    this.board[row][col].isRevealed = true;
+    const { isMine, value, x, y } = this.board[row][col];
+    if (isMine) return { gameOver: true, revealed: [{ value: "◉", x, y }] };
+    if (value !== 0) return { gameOver: false, revealed: [{ value, x, y }] };
+
+    const revealed = [{ value, x, y }, ...this.recursivelyOpenCells(row, col)];
+
+    return { gameOver: false, revealed };
   }
 }
 

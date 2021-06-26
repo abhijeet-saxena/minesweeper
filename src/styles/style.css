@@ -18,19 +18,34 @@ body {
   height: 100vh;
   display: grid;
   place-items: center;
+  padding: 1rem;
+}
+
+main {
+  /* border: solid 1px black; */
 }
 
 #board {
   display: flex;
   flex-wrap: wrap;
-  width: calc(20rem + 4px);
+  max-width: calc(20rem + 36px);
   gap: 4px;
 }
 
 .cell {
   width: 2rem;
   height: 2rem;
-  border: solid 1px red;
+  border: solid 1px gray;
   display: grid;
   place-items: center;
+}
+
+.cell {
+  /* background-image: url(/bomb.svg); */
+  cursor: pointer;
+}
+
+.revealed {
+  border-color: red;
+  pointer-events: none;
 }
