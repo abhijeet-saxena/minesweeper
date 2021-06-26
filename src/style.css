@@ -84,9 +84,13 @@ main section {
 }
 
 /* Stylings for Cell */
+[data-val] {
+  pointer-events: none;
+}
 [data-val="🚩"] {
   background: white;
   align-items: flex-start;
+  pointer-events: all;
 }
 [data-val="0"] {
   background: white;

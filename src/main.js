@@ -116,8 +116,13 @@ window.onload = function () {
   board.addEventListener("contextmenu", (event) => {
     if (!event.target.classList.contains("cell")) return;
     event.preventDefault();
-    event.target.dataset.val = "🚩";
-    event.target.innerHTML = "🚩";
+    if (event.target.dataset.val === "🚩") {
+      delete event.target.dataset.val;
+      event.target.innerHTML = "";
+    } else {
+      event.target.dataset.val = "🚩";
+      event.target.innerHTML = "🚩";
+    }
   });
 
   difficulty.addEventListener("change", () => {
