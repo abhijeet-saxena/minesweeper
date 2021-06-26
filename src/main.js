@@ -5,7 +5,7 @@ const gameSettings = {
   easy: {
     rows: 10,
     columns: 10,
-    mines: 10,
+    mines: 15,
   },
   medium: {
     rows: 15,
@@ -19,14 +19,15 @@ const gameSettings = {
   },
 };
 
-const { rows, columns, mines } = gameSettings.easy;
-
-let game = new Minesweeper(rows, columns, mines);
-game.init();
-
 window.onload = function () {
   const difficulty = document.querySelector("#difficulty");
   const board = document.querySelector("#board");
+  const end = document.querySelector(".game-over");
+  const timerDisplay = document.querySelector("#timer");
+  const finishStatus = end.querySelector("h1");
+  const finishTime = document.querySelector(".finish-time");
+  let timer = null;
+  let game = null;
 
   const revealTile = ({ target }) => {
     if (!target.classList.contains("cell")) return;
@@ -38,7 +39,7 @@ window.onload = function () {
     );
 
     if (gameOver) {
-      target.dataset.val = "💣";
+      clearInterval(timer);
       target.innerHTML = "💣";
 
       revealed.forEach((item, index) => {
@@ -46,7 +47,11 @@ window.onload = function () {
         setTimeout(() => {
           tile.dataset.val = "💣";
           tile.innerHTML = "💣";
-          if (index >= revealed.length - 1) alert("Game Over");
+          if (index === revealed.length - 1) {
+            finishStatus.innerHTML = "You Lost !!! 👎";
+            end.querySelector("#retry").innerHTML = "Retry";
+            end.style.top = 0;
+          }
         }, index * 200);
       });
       return;
@@ -54,6 +59,13 @@ window.onload = function () {
       const openedTiles = game.board.flat().reduce((acc, item) => {
         return (acc += item.isRevealed ? 1 : 0);
       }, 0);
+
+      if (openedTiles + game.mines === game.ROWS * game.COLUMNS) {
+        clearInterval(timer);
+        finishStatus.innerHTML = "You Win !!! ✌️";
+        end.querySelector("#retry").innerHTML = "New Game";
+        end.style.top = 0;
+      }
 
       for (let cell of revealed) {
         const tile = board.querySelector(
@@ -66,27 +78,54 @@ window.onload = function () {
   };
 
   const generateBoard = (arr, columns) => {
-    let op = "";
+    board.innerHTML = arr.reduce(
+      (acc, cell) =>
+        acc + `<div class="cell" data-x="${cell.x}" data-y="${cell.y}"></div>`,
+      ""
+    );
 
-    for (let cell of arr) {
-      op += `<div class="cell" data-x="${cell.x}" data-y="${cell.y}"></div>`;
-    }
-
-    board.innerHTML = op;
     board.style.width = `calc(${
       columns * document.querySelector(".cell").clientWidth
-    }px + ${(columns - 1) * 4}px)`;
+    }px + ${(columns - 1) * 2}px)`;
+
+    timer = setInterval(() => {
+      const diff = Math.floor((Date.now() - game.startTime) / 1000);
+      const min = Math.floor(diff / 60)
+        .toString()
+        .padStart(2, "0");
+      const sec = Math.floor(diff % 60)
+        .toString()
+        .padStart(2, "0");
+
+      timerDisplay.innerHTML = `<strong> Time </strong>${min}:${sec}`;
+      finishTime.innerHTML = `Time ${min}:${sec}`;
+    }, 1000);
     game.printBoard();
   };
 
-  generateBoard(game.board.flat(), game.COLUMNS);
+  const startGame = () => {
+    const { rows, columns, mines } = gameSettings[difficulty.value];
+    game = new Minesweeper(rows, columns, mines);
+    game.init();
+    finishStatus.style.display = "block";
+    timerDisplay.innerHTML = `<strong> Time </strong> 00:00`;
+    finishTime.innerHTML = `00:00`;
+    generateBoard(game.board.flat(), columns);
+  };
 
   board.addEventListener("click", revealTile);
 
-  difficulty.addEventListener("change", ({ target: { value } }) => {
-    const { rows, columns, mines } = gameSettings[value];
-    game = new Minesweeper(rows, columns, mines);
-    game.init();
-    generateBoard(game.board.flat(), columns);
+  difficulty.addEventListener("change", () => {
+    clearInterval(timer);
+    finishStatus.innerHTML = "Start Game";
+    finishStatus.style.display = "none";
+    finishTime.style.display = "none";
+    end.style.top = "0";
+  });
+
+  document.querySelector("#retry").addEventListener("click", () => {
+    startGame();
+    end.style.top = "100%";
+    finishTime.style.display = "block";
   });
 };

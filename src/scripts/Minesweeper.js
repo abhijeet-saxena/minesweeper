@@ -1,5 +1,6 @@
 class Minesweeper {
   constructor(rows, cols, mines) {
+    this.startTime = Date.now();
     this.ROWS = rows;
     this.COLUMNS = cols;
     this.board = [];
