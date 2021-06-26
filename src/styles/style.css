@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Outline&display=swap");
+
 *,
 *::after,
 *::before {
@@ -6,46 +8,125 @@
   margin: 0;
   padding: 0;
   outline: none;
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px; */
 }
 
 body {
   width: 100vw;
-  height: 100vh;
-  display: grid;
-  place-items: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ddeee4;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 1rem;
+  gap: 1rem;
+}
+
+#difficulty {
+  appearance: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+header h1 {
+  font-family: "Bungee Outline", Arial, Helvetica, sans-serif;
+  font-size: 5rem;
+}
+
+header img {
+  height: 100px;
 }
 
 main {
-  /* border: solid 1px black; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #board {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  max-width: calc(20rem + 36px);
-  gap: 4px;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 2rem;
 }
 
 .cell {
+  font-family: system-ui;
   width: 2rem;
   height: 2rem;
-  border: solid 1px gray;
   display: grid;
   place-items: center;
+  background: #ccddee;
+  border-radius: 4px;
 }
 
 .cell {
-  /* background-image: url(/bomb.svg); */
   cursor: pointer;
+  font-weight: 900;
 }
 
 .revealed {
   border-color: red;
   pointer-events: none;
+}
+
+[data-val="0"] {
+  background: white;
+}
+
+[data-val="1"] {
+  background: #1cc5dc;
+  color: #c0fefc;
+}
+
+[data-val="2"] {
+  background: #ffe227;
+  color: #f58634;
+}
+
+[data-val="3"] {
+  background: #252525;
+  color: #dadada;
+}
+
+[data-val="4"] {
+  background: #ff449f;
+  color: #f0d9e7;
+}
+
+[data-val="5"] {
+  background: #3e978b;
+  color: #c1ffc1;
+}
+
+[data-val="6"] {
+  background: #f58634;
+  color: #ffba5a;
+}
+[data-val="7"] {
+  background: #542e71;
+  color: #dcaee8;
+}
+[data-val="8"] {
+  background: #fa1e0e;
+  color: #fbceb5;
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  header img {
+    height: 2rem;
+  }
+  .cell {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }

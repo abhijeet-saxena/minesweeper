@@ -5,6 +5,7 @@ class Minesweeper {
     this.board = [];
     this.mines = mines;
     this.mineLocations = new Set();
+    this.revealedCount = 0;
   }
 
   init() {
@@ -99,6 +100,7 @@ class Minesweeper {
             queue.push(item);
           }
           item.isRevealed = true;
+          this.revealedCount += 1;
         }
       }
     }
@@ -107,14 +109,20 @@ class Minesweeper {
   }
 
   openCell(row, col) {
-    this.board[row][col].isRevealed = true;
     const { isMine, value, x, y } = this.board[row][col];
-    if (isMine) return { gameOver: true, revealed: [{ value: "◉", x, y }] };
-    if (value !== 0) return { gameOver: false, revealed: [{ value, x, y }] };
+    if (isMine) return { gameOver: true, revealed: [...this.mineLocations] };
+    if (value !== 0) {
+      this.revealedCount += 1;
+      return {
+        gameOver: false,
+        revealed: [{ value, x, y }],
+        count: this.revealedCount,
+      };
+    }
 
     const revealed = [{ value, x, y }, ...this.recursivelyOpenCells(row, col)];
 
-    return { gameOver: false, revealed };
+    return { gameOver: false, revealed, count: this.revealedCount };
   }
 }
 

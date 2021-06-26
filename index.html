@@ -7,7 +7,19 @@
     <title>Minesweeper</title>
   </head>
   <body>
+    <header>
+      <img src="/bomb.svg" alt="Minesweeper" />
+      <h1>MINESWEEPER</h1>
+    </header>
     <main>
+      <div style="text-align: center; margin: 1rem 0">
+        <strong> Select Difficulty: </strong>
+        <select name="difficulty" id="difficulty">
+          <option value="easy" selected>Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
       <div id="board"></div>
     </main>
     <script type="module" src="./src/main.js"></script>
