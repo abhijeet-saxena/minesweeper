@@ -84,6 +84,10 @@ main section {
 }
 
 /* Stylings for Cell */
+[data-val="🚩"] {
+  background: white;
+  align-items: flex-start;
+}
 [data-val="0"] {
   background: white;
 }

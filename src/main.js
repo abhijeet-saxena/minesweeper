@@ -113,6 +113,12 @@ window.onload = function () {
   };
 
   board.addEventListener("click", revealTile);
+  board.addEventListener("contextmenu", (event) => {
+    if (!event.target.classList.contains("cell")) return;
+    event.preventDefault();
+    event.target.dataset.val = "🚩";
+    event.target.innerHTML = "🚩";
+  });
 
   difficulty.addEventListener("change", () => {
     clearInterval(timer);
