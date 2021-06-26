@@ -1,5 +1,4 @@
-import "./styles/style.css";
-import Minesweeper from "./scripts/Minesweeper";
+import Minesweeper from "./Minesweeper";
 
 const gameSettings = {
   easy: {
@@ -97,8 +96,8 @@ window.onload = function () {
         .toString()
         .padStart(2, "0");
 
-      timerDisplay.innerHTML = `<strong> Time </strong>${min}:${sec}`;
-      finishTime.innerHTML = `Time ${min}:${sec}`;
+      timerDisplay.innerHTML = `<strong>⏰ Time</strong> ${min}:${sec}`;
+      finishTime.innerHTML = `⏰ ${min}:${sec}`;
     }, 1000);
     game.printBoard();
   };
@@ -108,8 +107,8 @@ window.onload = function () {
     game = new Minesweeper(rows, columns, mines);
     game.init();
     finishStatus.style.display = "block";
-    timerDisplay.innerHTML = `<strong> Time </strong> 00:00`;
-    finishTime.innerHTML = `00:00`;
+    timerDisplay.innerHTML = `<strong>⏰ Time </strong> 00:00`;
+    finishTime.innerHTML = `⏰ 00:00`;
     generateBoard(game.board.flat(), columns);
   };
 
