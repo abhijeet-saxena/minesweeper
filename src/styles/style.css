@@ -1,5 +1,7 @@
+/* Imports */
 @import url("https://fonts.googleapis.com/css2?family=Bungee+Outline&display=swap");
 
+/* Resetting Styles */
 *,
 *::after,
 *::before {
@@ -16,7 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #ddeee4;
+  background: #e4efe7;
 }
 
 header {
@@ -52,7 +54,7 @@ main {
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2px;
+  gap: 4px;
   margin-bottom: 2rem;
 }
 
@@ -62,49 +64,40 @@ main {
   height: 2rem;
   display: grid;
   place-items: center;
-  background: #ccddee;
+  background: #a7c4bc;
   border-radius: 4px;
-}
-
-.cell {
   cursor: pointer;
   font-weight: 900;
 }
 
 .revealed {
-  border-color: red;
   pointer-events: none;
 }
 
+/* Stylings for Cell */
 [data-val="0"] {
   background: white;
 }
-
 [data-val="1"] {
   background: #1cc5dc;
   color: #c0fefc;
 }
-
 [data-val="2"] {
   background: #ffe227;
   color: #f58634;
 }
-
 [data-val="3"] {
   background: #252525;
   color: #dadada;
 }
-
 [data-val="4"] {
   background: #ff449f;
   color: #f0d9e7;
 }
-
 [data-val="5"] {
   background: #3e978b;
   color: #c1ffc1;
 }
-
 [data-val="6"] {
   background: #f58634;
   color: #ffba5a;
@@ -118,6 +111,18 @@ main {
   color: #fbceb5;
 }
 
+.game-over {
+  border: solid 1px lightgray;
+  width: 300px;
+  position: absolute;
+  background: white;
+  border-radius: 4px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Mobile responsiveness */
 @media (max-width: 480px) {
   header h1 {
     font-size: 2rem;
