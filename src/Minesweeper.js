@@ -1,20 +1,22 @@
 class Minesweeper {
   constructor(rows, cols, mines) {
-    this.startTime = Date.now();
-    this.ROWS = rows;
-    this.COLUMNS = cols;
-    this.board = [];
-    this.mines = mines;
-    this.mineLocations = new Set();
+    this.startTime = Date.now(); // used for timer
+    this.ROWS = rows; // rows in board
+    this.COLUMNS = cols; // columns in board
+    this.board = []; // holds the content of board
+    this.mines = mines; // max number of mines for this board
+    this.mineLocations = new Set(); // location of each mine
   }
 
   init() {
+    // Add random mine locations
     while (this.mineLocations.size !== this.mines) {
       this.mineLocations.add(
         Math.floor(Math.random() * this.ROWS * this.COLUMNS)
       );
     }
 
+    // Generate the board content
     for (let i = 0; i < this.ROWS; i++) {
       const row = [];
       for (let j = 0; j < this.COLUMNS; j++) {
@@ -37,18 +39,20 @@ class Minesweeper {
     }
   }
 
+  // Helper method to print out the board
   printBoard() {
     for (let i = 0; i < this.ROWS; i++) {
       let rowText = "";
       for (let j = 0; j < this.COLUMNS; j++) {
-        rowText += `  ${
-          this.board[i][j].isMine ? "X" : this.board[i][j].value
-        }  `;
+        rowText += ` ${
+          this.board[i][j].isMine ? "◉" : this.board[i][j].value
+        } `;
       }
       console.log(`${rowText}\n`);
     }
   }
 
+  // Calculate number of mines around each cell and store that number
   getValueAtCell(row, col) {
     let value = 0;
     for (let i = -1; i < 2; i++) {
@@ -63,6 +67,7 @@ class Minesweeper {
     return value;
   }
 
+  // Returns a list of adjacent cells
   getAdjacentCells(row, col) {
     const adj = [];
 
@@ -85,6 +90,7 @@ class Minesweeper {
     return adj;
   }
 
+  // Helper function to keep opening all cells that are not mines
   recursivelyOpenCells(row, col) {
     let op = [];
     let queue = [this.board[row][col]];
@@ -107,9 +113,15 @@ class Minesweeper {
     return op;
   }
 
+  // Open each cell and return status of that move
   openCell(row, col) {
     const { isMine, value, x, y } = this.board[row][col];
-    if (isMine) return { gameOver: true, revealed: [...this.mineLocations] };
+
+    if (isMine) {
+      const cells = this.board.flat(2).filter((item) => item.isMine);
+      return { gameOver: true, revealed: [...cells] };
+    }
+
     if (value !== 0) {
       this.board[row][col].isRevealed = true;
       return {
@@ -118,9 +130,10 @@ class Minesweeper {
       };
     }
 
-    const revealed = [{ value, x, y }, ...this.recursivelyOpenCells(row, col)];
-
-    return { gameOver: false, revealed };
+    return {
+      gameOver: false,
+      revealed: [{ value, x, y }, ...this.recursivelyOpenCells(row, col)],
+    };
   }
 }
 
