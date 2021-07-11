@@ -83,6 +83,12 @@ main section {
   pointer-events: none;
 }
 
+@keyframes explode {
+  to {
+    transform: scale(1.1);
+  }
+}
+
 /* Stylings for Cell */
 [data-val] {
   pointer-events: none;
@@ -92,6 +98,10 @@ main section {
   font-size: 14px;
   pointer-events: all;
   padding: 0 0 4px 2px;
+}
+[data-val="💣"] {
+  background: white;
+  animation: explode 1000ms infinite;
 }
 [data-val="0"] {
   background: white;
@@ -186,8 +196,8 @@ main section {
     height: 2rem;
   }
   .cell {
-    width: 2.1rem;
-    height: 2.1rem;
+    width: 2rem;
+    height: 2rem;
   }
   main section {
     flex-direction: column;
