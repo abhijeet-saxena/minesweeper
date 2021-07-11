@@ -50,6 +50,7 @@ class Minesweeper {
       }
       console.log(`${rowText}\n`);
     }
+    console.log(`\n`)
   }
 
   // Calculate number of mines around each cell and store that number
