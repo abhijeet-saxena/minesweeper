@@ -30,12 +30,13 @@ window.onload = function () {
   const finishTime = document.querySelector(".finish-time");
 
   // Global variables
-  let timer = null; // Holds timer
   let game = null; // Main game variable
+  let timer = null; // Holds timer
+  let isGameOver = false;
 
   // Handles game state on opening a tile
   const revealTile = ({ target }) => {
-    if (!target.classList.contains("cell")) return;
+    if (!target.classList.contains("cell") || isGameOver) return;
     const { x, y } = target.dataset;
 
     const { revealed, gameOver } = game.openCell(
@@ -44,6 +45,7 @@ window.onload = function () {
     );
 
     if (gameOver) {
+      isGameOver = true;
       // Lose Scenario
       clearInterval(timer);
       target.innerHTML = "💣";
@@ -124,6 +126,7 @@ window.onload = function () {
     timerDisplay.innerHTML = `<strong>⏰ Time </strong> 00:00`;
     finishTime.innerHTML = `⏰ 00:00`;
     generateBoard(game.board.flat(), columns);
+    isGameOver = false;
   };
 
   // Open tile on click
