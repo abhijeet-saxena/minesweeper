@@ -186,14 +186,14 @@ main section {
     height: 2rem;
   }
   .cell {
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2.1rem;
+    height: 2.1rem;
   }
   main section {
     flex-direction: column;
     gap: 0.5rem;
   }
-  #board{
+  #board {
     margin-top: 1rem;
   }
 }
