@@ -89,8 +89,9 @@ main section {
 }
 [data-val="🚩"] {
   background: white;
-  align-items: flex-start;
+  font-size: 14px;
   pointer-events: all;
+  padding: 0 0 4px 2px;
 }
 [data-val="0"] {
   background: white;
@@ -185,7 +186,14 @@ main section {
     height: 2rem;
   }
   .cell {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+  main section {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #board{
+    margin-top: 1rem;
   }
 }
