@@ -45,10 +45,12 @@ window.onload = function () {
     );
 
     if (gameOver) {
-      isGameOver = true;
       // Lose Scenario
+      isGameOver = true;
       clearInterval(timer);
       target.innerHTML = "💣";
+      target.dataset.val = "💣";
+
       revealed.forEach((cell, index) => {
         const tile = board.querySelector(
           `:nth-child(${cell.x * game.COLUMNS + cell.y + 1})`
